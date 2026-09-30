@@ -1,0 +1,35 @@
+{
+  "_comment": "Which past resume each bullet came from, and when it was last written. Drives the current / recent / archive freshness tiers.",
+  "versions": {
+    "ds-v1": {
+      "date": "2026-06-20",
+      "file": "resume-data-science.docx",
+      "label": "Data Science",
+      "domains": [
+        "data-science"
+      ]
+    },
+    "finance-v1": {
+      "date": "2026-02-10",
+      "file": "resume-finance.docx",
+      "label": "Finance",
+      "domains": [
+        "finance"
+      ]
+    },
+    "ns-v1": {
+      "date": "2026-01-15",
+      "file": "resume-natsec.docx",
+      "label": "National Security",
+      "domains": [
+        "national-security"
+      ]
+    },
+    "general-v1": {
+      "date": "2025-09-01",
+      "file": "resume-general.pdf",
+      "label": "Early general",
+      "domains": []
+    }
+  }
+}

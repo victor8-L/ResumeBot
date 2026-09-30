@@ -1,0 +1,21 @@
+Anduril Industries — Data Analyst Intern, Mission Systems (Summer 2026)
+
+About the role
+You will work alongside engineers and analysts to turn messy, multi-source data into
+decision-grade products for defense customers. Expect to build pipelines against
+geospatial and sensor feeds, evaluate model performance, and write up findings that a
+non-technical operator can act on.
+
+What you'll do
+- Build and maintain data pipelines that fuse open-source, geospatial, and sensor data
+- Evaluate machine learning model outputs and characterize failure modes
+- Produce written analytic products and brief findings to technical and operational
+  stakeholders
+- Partner with government and industry subject matter experts
+
+What we're looking for
+- Currently pursuing a degree in a quantitative field
+- Proficiency in Python; familiarity with SQL and geospatial tooling a plus
+- Demonstrated experience working with real, imperfect data end to end
+- Interest in national security; ability to obtain a US security clearance
+- Strong written communication — you will be read more often than you are heard

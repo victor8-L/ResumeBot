@@ -1,0 +1,269 @@
+{
+  "_comment": "Fictional example corpus. Copy this folder to corpus/ and replace it with your own material; corpus/ is gitignored.",
+  "name": "Jordan Example",
+  "contact": [
+    "Springfield, Illinois",
+    "555-0100",
+    "jordan.example@example.edu"
+  ],
+  "education": [
+    {
+      "org": "Example State University",
+      "location": "Springfield, Illinois",
+      "dates": "Expected May 2028",
+      "credential_options": [
+        {
+          "id": "cred-econ-finance",
+          "text": "Bachelor of Science in Economics, Minor in Finance",
+          "domains": [
+            "finance"
+          ],
+          "tags": [
+            "finance",
+            "business",
+            "general"
+          ]
+        },
+        {
+          "id": "cred-econ-security",
+          "text": "Bachelor of Science in Economics, Minor in Security Studies",
+          "domains": [
+            "national-security"
+          ],
+          "tags": [
+            "national-security",
+            "policy",
+            "intelligence"
+          ]
+        },
+        {
+          "id": "cred-econ-ds",
+          "text": "Bachelor of Science in Economics, Minor in Data Science",
+          "domains": [
+            "data-science"
+          ],
+          "tags": [
+            "data-science",
+            "ai",
+            "software"
+          ]
+        }
+      ],
+      "detail_line": "GPA: 3.70/4.00 | Dean's List",
+      "coursework_pool": [
+        {
+          "id": "course-ml",
+          "text": "Machine Learning",
+          "domains": [
+            "data-science"
+          ],
+          "tags": [
+            "machine-learning",
+            "ai",
+            "quantitative"
+          ],
+          "code": "DS 3100",
+          "term": "2025 Fall"
+        },
+        {
+          "id": "course-econometrics",
+          "text": "Econometrics",
+          "domains": [
+            "data-science",
+            "finance"
+          ],
+          "tags": [
+            "statistics",
+            "quantitative",
+            "economics"
+          ],
+          "code": "ECON 3300",
+          "term": "2025 Fall"
+        },
+        {
+          "id": "course-corpfin",
+          "text": "Corporate Finance",
+          "domains": [
+            "finance"
+          ],
+          "tags": [
+            "finance",
+            "valuation"
+          ],
+          "code": "FIN 2100",
+          "term": "2025 Spring"
+        },
+        {
+          "id": "course-datastructures",
+          "text": "Data Structures",
+          "domains": [
+            "data-science"
+          ],
+          "tags": [
+            "software",
+            "algorithms"
+          ],
+          "code": "CS 2100",
+          "term": "2024 Fall"
+        },
+        {
+          "id": "course-intl-security",
+          "text": "International Security",
+          "domains": [
+            "national-security"
+          ],
+          "tags": [
+            "policy",
+            "intelligence"
+          ],
+          "code": "PSCI 2400",
+          "term": "2025 Spring"
+        },
+        {
+          "id": "course-stats",
+          "text": "Probability & Statistics",
+          "domains": [
+            "data-science",
+            "finance"
+          ],
+          "tags": [
+            "statistics",
+            "quantitative"
+          ],
+          "code": "MATH 2200",
+          "term": "2024 Fall"
+        }
+      ]
+    }
+  ],
+  "skills_pool": [
+    {
+      "id": "skill-python",
+      "text": "Python",
+      "domains": [
+        "data-science"
+      ],
+      "tags": [
+        "software",
+        "data-science"
+      ]
+    },
+    {
+      "id": "skill-sql",
+      "text": "SQL",
+      "domains": [
+        "data-science"
+      ],
+      "tags": [
+        "data-science",
+        "analytics"
+      ]
+    },
+    {
+      "id": "skill-excel",
+      "text": "Excel (financial modeling)",
+      "domains": [
+        "finance"
+      ],
+      "tags": [
+        "finance",
+        "modeling"
+      ]
+    },
+    {
+      "id": "skill-gis",
+      "text": "QGIS",
+      "domains": [
+        "national-security",
+        "data-science"
+      ],
+      "tags": [
+        "geospatial",
+        "osint"
+      ]
+    },
+    {
+      "id": "skill-tableau",
+      "text": "Tableau",
+      "domains": [
+        "data-science",
+        "finance"
+      ],
+      "tags": [
+        "visualization",
+        "analytics"
+      ]
+    },
+    {
+      "id": "skill-spanish",
+      "text": "Spanish (professional proficiency)",
+      "domains": [],
+      "tags": [
+        "language",
+        "general"
+      ]
+    }
+  ],
+  "activities_pool": [
+    {
+      "id": "act-investment-club",
+      "text": "Student Investment Club (Analyst)",
+      "domains": [
+        "finance"
+      ],
+      "tags": [
+        "finance",
+        "markets"
+      ]
+    },
+    {
+      "id": "act-model-un",
+      "text": "Model United Nations",
+      "domains": [
+        "national-security"
+      ],
+      "tags": [
+        "policy",
+        "public-speaking"
+      ]
+    },
+    {
+      "id": "act-rowing",
+      "text": "Club Rowing",
+      "domains": [],
+      "tags": [
+        "athletics",
+        "general"
+      ]
+    }
+  ],
+  "interests_pool": [
+    {
+      "id": "int-chess",
+      "text": "Chess",
+      "domains": [],
+      "tags": [
+        "general"
+      ]
+    },
+    {
+      "id": "int-hiking",
+      "text": "Long-distance hiking",
+      "domains": [],
+      "tags": [
+        "general"
+      ]
+    },
+    {
+      "id": "int-history",
+      "text": "Cold War history",
+      "domains": [
+        "national-security"
+      ],
+      "tags": [
+        "policy",
+        "general"
+      ]
+    }
+  ]
+}

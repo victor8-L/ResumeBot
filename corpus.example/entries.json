@@ -1,0 +1,312 @@
+[
+  {
+    "id": "acme-analytics",
+    "org": "Acme Logistics",
+    "role": "Data Analytics Intern",
+    "location": "Chicago, Illinois",
+    "dates": "Summer 2026",
+    "default_section": "professional",
+    "domains": [
+      "data-science"
+    ],
+    "tags": [
+      "data-science",
+      "analytics",
+      "internship"
+    ],
+    "bullets": [
+      {
+        "id": "acme-01",
+        "text": "Built demand forecasting model in Python for 1,200 routes, cutting weekly forecast error by 18% vs. baseline",
+        "domains": [
+          "data-science"
+        ],
+        "tags": [
+          "machine-learning",
+          "forecasting",
+          "python"
+        ],
+        "resume_versions": [
+          "ds-v1"
+        ]
+      },
+      {
+        "id": "acme-02",
+        "text": "Automated SQL reporting pipeline feeding operations dashboard, saving analysts roughly six hours each week",
+        "domains": [
+          "data-science"
+        ],
+        "tags": [
+          "data-engineering",
+          "sql",
+          "automation"
+        ],
+        "resume_versions": [
+          "ds-v1",
+          "general-v1"
+        ]
+      },
+      {
+        "id": "acme-03",
+        "text": "Presented route-profitability findings to VP of Operations; two of three recommendations adopted in Q3",
+        "domains": [
+          "data-science",
+          "finance"
+        ],
+        "tags": [
+          "communication",
+          "analytics",
+          "business"
+        ],
+        "resume_versions": [
+          "ds-v1",
+          "finance-v1"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "osint-lab",
+    "org": "Example State Open Source Intelligence Lab",
+    "role": "Research Assistant",
+    "location": "Springfield, Illinois",
+    "dates": "September 2025 – Present",
+    "default_section": "projects",
+    "domains": [
+      "national-security",
+      "data-science"
+    ],
+    "tags": [
+      "osint",
+      "research",
+      "geospatial"
+    ],
+    "bullets": [
+      {
+        "id": "osint-01",
+        "text": "Mapping maritime traffic anomalies with public AIS data and satellite imagery to flag likely sanctions evasion",
+        "domains": [
+          "national-security",
+          "data-science"
+        ],
+        "tags": [
+          "osint",
+          "geospatial",
+          "sanctions"
+        ],
+        "resume_versions": [
+          "ns-v1",
+          "ds-v1"
+        ]
+      },
+      {
+        "id": "osint-02",
+        "text": "Wrote Python tooling to reconcile vessel identities across three open datasets, resolving 2,000+ conflicts",
+        "domains": [
+          "data-science",
+          "national-security"
+        ],
+        "tags": [
+          "python",
+          "data-engineering",
+          "entity-resolution"
+        ],
+        "resume_versions": [
+          "ds-v1"
+        ]
+      },
+      {
+        "id": "osint-03",
+        "text": "Co-authored policy brief on dark-fleet tanker activity distributed to a regional think tank's analysts",
+        "domains": [
+          "national-security"
+        ],
+        "tags": [
+          "writing",
+          "policy",
+          "research"
+        ],
+        "resume_versions": [
+          "ns-v1"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "case-comp",
+    "org": "Midwest Undergraduate Case Competition",
+    "role": "Team Lead, 2nd Place of 40 Teams",
+    "location": "Chicago, Illinois",
+    "dates": "February 2026",
+    "default_section": "projects",
+    "domains": [
+      "finance"
+    ],
+    "tags": [
+      "finance",
+      "valuation",
+      "competition"
+    ],
+    "bullets": [
+      {
+        "id": "case-01",
+        "text": "Led four-person team building three-statement model and DCF valuation for mid-cap industrial acquisition",
+        "domains": [
+          "finance"
+        ],
+        "tags": [
+          "valuation",
+          "modeling",
+          "leadership"
+        ],
+        "resume_versions": [
+          "finance-v1"
+        ],
+        "alt_group": "case-model"
+      },
+      {
+        "id": "case-02",
+        "text": "Built DCF and comparable-companies valuation for mid-cap industrial target; placed 2nd of 40 teams",
+        "domains": [
+          "finance"
+        ],
+        "tags": [
+          "valuation",
+          "modeling"
+        ],
+        "resume_versions": [
+          "general-v1"
+        ],
+        "alt_group": "case-model"
+      },
+      {
+        "id": "case-03",
+        "text": "Pitched acquisition thesis and synergy case to panel of investment banking and private equity judges",
+        "domains": [
+          "finance"
+        ],
+        "tags": [
+          "communication",
+          "investment-banking"
+        ],
+        "resume_versions": [
+          "finance-v1"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "investment-club",
+    "org": "Student Investment Club",
+    "role": "Sector Analyst, Industrials",
+    "location": "Springfield, Illinois",
+    "dates": "January 2025 – Present",
+    "default_section": "leadership",
+    "domains": [
+      "finance"
+    ],
+    "tags": [
+      "finance",
+      "equity-research",
+      "markets"
+    ],
+    "bullets": [
+      {
+        "id": "inv-01",
+        "text": "Cover six industrial names for $150K student-managed fund; initiated two positions approved by the board",
+        "domains": [
+          "finance"
+        ],
+        "tags": [
+          "equity-research",
+          "markets"
+        ],
+        "resume_versions": [
+          "finance-v1",
+          "general-v1"
+        ]
+      },
+      {
+        "id": "inv-02",
+        "text": "Write weekly sector note on earnings, macro data, and supply-chain signals for 60 club members",
+        "domains": [
+          "finance"
+        ],
+        "tags": [
+          "writing",
+          "markets"
+        ],
+        "resume_versions": [
+          "finance-v1"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dining-hall",
+    "org": "Example State Dining Services",
+    "role": "Shift Supervisor",
+    "location": "Springfield, Illinois",
+    "dates": "August 2024 – Present",
+    "default_section": "leadership",
+    "domains": [],
+    "tags": [
+      "leadership",
+      "operations"
+    ],
+    "bullets": [
+      {
+        "id": "dining-01",
+        "text": "Supervise crew of 12 through peak service for 900+ students; trained eight new hires in first semester",
+        "domains": [],
+        "tags": [
+          "leadership",
+          "training"
+        ],
+        "resume_versions": [
+          "general-v1",
+          "ds-v1"
+        ]
+      },
+      {
+        "id": "dining-02",
+        "text": "Redesigned shift schedule in a shared spreadsheet, eliminating recurring understaffing on weekend nights",
+        "domains": [],
+        "tags": [
+          "operations",
+          "problem-solving"
+        ],
+        "resume_versions": [
+          "general-v1"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tutoring",
+    "org": "Springfield Public Library",
+    "role": "Volunteer Math Tutor",
+    "location": "Springfield, Illinois",
+    "dates": "June 2023 – August 2024",
+    "default_section": "leadership",
+    "domains": [],
+    "tags": [
+      "mentorship",
+      "communication"
+    ],
+    "bullets": [
+      {
+        "id": "tutor-01",
+        "text": "Tutored 20+ high school students weekly in algebra and statistics; all regulars passed their final exams",
+        "domains": [],
+        "tags": [
+          "mentorship",
+          "statistics"
+        ],
+        "resume_versions": [
+          "general-v1"
+        ]
+      }
+    ]
+  }
+]

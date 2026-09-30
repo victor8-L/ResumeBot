@@ -1,0 +1,92 @@
+{
+  "target": "Example Defense Analytics — Data Analyst Intern",
+  "domains": [
+    "national-security",
+    "data-science"
+  ],
+  "credential_id": "cred-econ-ds",
+  "coursework_ids": [
+    "course-ml",
+    "course-intl-security",
+    "course-econometrics",
+    "course-datastructures"
+  ],
+  "selections": [
+    {
+      "section": "Professional Experience",
+      "entry_id": "acme-analytics",
+      "bullet_id": "acme-01",
+      "priority": 1
+    },
+    {
+      "section": "Professional Experience",
+      "entry_id": "acme-analytics",
+      "bullet_id": "acme-02",
+      "priority": 1
+    },
+    {
+      "section": "Professional Experience",
+      "entry_id": "acme-analytics",
+      "bullet_id": "acme-03",
+      "priority": 2
+    },
+    {
+      "section": "Projects & Research",
+      "entry_id": "osint-lab",
+      "bullet_id": "osint-01",
+      "priority": 1
+    },
+    {
+      "section": "Projects & Research",
+      "entry_id": "osint-lab",
+      "bullet_id": "osint-02",
+      "priority": 1
+    },
+    {
+      "section": "Projects & Research",
+      "entry_id": "osint-lab",
+      "bullet_id": "osint-03",
+      "priority": 2
+    },
+    {
+      "section": "Projects & Research",
+      "entry_id": "case-comp",
+      "bullet_id": "case-01",
+      "priority": 2
+    },
+    {
+      "section": "Leadership & Experience",
+      "entry_id": "dining-hall",
+      "bullet_id": "dining-01",
+      "priority": 2
+    },
+    {
+      "section": "Leadership & Experience",
+      "entry_id": "dining-hall",
+      "bullet_id": "dining-02",
+      "priority": 3
+    },
+    {
+      "section": "Leadership & Experience",
+      "entry_id": "tutoring",
+      "bullet_id": "tutor-01",
+      "priority": 3
+    }
+  ],
+  "skill_ids": [
+    "skill-python",
+    "skill-sql",
+    "skill-gis",
+    "skill-tableau",
+    "skill-spanish"
+  ],
+  "activity_ids": [
+    "act-model-un",
+    "act-rowing"
+  ],
+  "interest_ids": [
+    "int-history",
+    "int-chess"
+  ],
+  "notes": "Hand-written sample plan so `render` can be tried without an API key. A real plan is produced by `tailor`."
+}

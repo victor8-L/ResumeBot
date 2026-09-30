@@ -1,0 +1,16 @@
+out/
+__pycache__/
+*.pyc
+.DS_Store
+corpus/*.new.json
+
+# Secrets: ignore every .env variant, but keep the committed template.
+.env
+.env.*
+!.env.example
+
+# Personal material: raw resumes/transcripts and the real corpus built from them.
+# The repo ships corpus.example/ instead; copy it to corpus/ to start your own.
+data/
+corpus/
+todo.md

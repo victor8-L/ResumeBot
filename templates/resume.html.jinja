@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{{ name }} — Resume</title>
+<style>
+  /* ---- Page geometry: the single-page contract lives here. ---- */
+  @page {
+    size: Letter;
+    margin: {{ page.margin }};
+  }
+
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    font-family: {{ page.font_stack }};
+    font-size: {{ page.font_size }};
+    line-height: {{ page.line_height }};
+    color: #000;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---- Header ---- */
+  .name {
+    font-size: {{ page.name_size }};
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.2px;
+    margin: 0 0 1px 0;
+  }
+  .contact {
+    text-align: center;
+    margin: 0 0 {{ page.section_gap }} 0;
+  }
+
+  /* ---- Sections ---- */
+  .section { margin-bottom: {{ page.section_gap }}; }
+  .section-title {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    border-bottom: 1px solid #000;
+    padding-bottom: 1px;
+    margin-bottom: 2px;
+  }
+
+  /* ---- Entries ---- */
+  .entry { margin-bottom: {{ page.entry_gap }}; }
+  .entry:last-child { margin-bottom: 0; }
+
+  .line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .line .right { white-space: nowrap; }
+
+  .org  { font-weight: 700; }
+  .role { font-style: italic; }
+  .where, .when { font-style: italic; }
+
+  ul {
+    margin: 0;
+    padding-left: 14px;
+    list-style-type: disc;
+  }
+  li { margin: 0; padding: 0; }
+
+  .detail { margin: 0; }
+
+  /* Keep an entry from splitting across pages if a second page ever appears. */
+  .entry, .section-title { break-inside: avoid; page-break-inside: avoid; }
+  .section-title { break-after: avoid; page-break-after: avoid; }
+</style>
+</head>
+<body>
+
+  <div class="name">{{ name }}</div>
+  <div class="contact">{{ contact | join(" | ") }}</div>
+
+  {% if education %}
+  <div class="section">
+    <div class="section-title">Education</div>
+    {% for ed in education %}
+    <div class="entry">
+      <div class="line"><span class="org">{{ ed.org }}</span><span class="right where">{{ ed.location }}</span></div>
+      <div class="line"><span class="role">{{ ed.credential }}</span><span class="right when">{{ ed.dates }}</span></div>
+      {% if ed.detail_line %}<div class="detail">{{ ed.detail_line }}</div>{% endif %}
+      {% if ed.coursework %}<div class="detail"><em>Relevant Courses:</em> {{ ed.coursework | join("; ") }}</div>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% for section in sections %}
+  <div class="section">
+    <div class="section-title">{{ section.title }}</div>
+    {% for entry in section.entries %}
+    <div class="entry">
+      <div class="line"><span class="org">{{ entry.org }}</span><span class="right where">{{ entry.location }}</span></div>
+      <div class="line"><span class="role">{{ entry.role }}</span><span class="right when">{{ entry.dates }}</span></div>
+      {% if entry.bullets %}
+      <ul>
+        {% for bullet in entry.bullets %}<li>{{ bullet }}</li>{% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endfor %}
+
+  {% if footer.skills or footer.activities or footer.interests %}
+  <div class="section">
+    <div class="section-title">Skills, Activities, &amp; Interests</div>
+    {% if footer.skills %}<div class="detail"><strong>Skills:</strong> {{ footer.skills | join("; ") }}</div>{% endif %}
+    {% if footer.activities %}<div class="detail"><strong>Activities:</strong> {{ footer.activities | join(", ") }}</div>{% endif %}
+    {% if footer.interests %}<div class="detail"><strong>Interests:</strong> {{ footer.interests | join(", ") }}</div>{% endif %}
+  </div>
+  {% endif %}
+
+</body>
+</html>
