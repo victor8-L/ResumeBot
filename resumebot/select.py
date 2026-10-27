@@ -75,6 +75,15 @@ In `notes`, explain your framing in 3-5 sentences: what you decided this employe
 buying, what you led with, what you deliberately cut, and — if the job spans more than \
 one domain — how you balanced them. This is for the candidate's terminal, not the PDF.
 
+In `requirements`, list what the posting asks for: 6-12 skills, tools, or qualifications, \
+most important first. Give each a short canonical label you would use for the same thing \
+in any posting ("SQL", not "strong SQL skills"; "security clearance", not "ability to \
+obtain a clearance"), so labels can be tallied across applications. In `evidence_ids`, \
+list every corpus id (bullet, skill, course, activity, or credential), selected or not, \
+that genuinely demonstrates it; leave it empty when nothing in the corpus does. An empty \
+list is how the candidate learns what to build or write next, and a stretched match hides \
+that. Like `notes`, this never appears on the resume.
+
 Output shape: `selections` is one flat row per bullet, in the exact order it should appear \
 on the page. Sections and entries are grouped by first appearance, so keep every row for \
 an entry consecutive, and every entry for a section consecutive.
@@ -89,7 +98,7 @@ A correctly filled fragment (ids copied verbatim from the corpus):
 {
   "target": "Anduril — Data Analyst Intern, Mission Systems",
   "domains": ["national-security", "data-science"],
-  "credential_id": "cred-ds-natsec",
+  "credential_id": "cred-ds-genai",
   "coursework_ids": ["course-aml", "course-econometrics"],
   "selections": [
     {"section": "Projects & Research", "entry_id": "vins-fellow", "bullet_id": "vins-03", "priority": 1},
@@ -101,7 +110,11 @@ A correctly filled fragment (ids copied verbatim from the corpus):
   "skill_ids": ["skill-python", "skill-sql"],
   "activity_ids": ["act-honor"],
   "interest_ids": ["int-camino"],
-  "notes": "Anduril is buying end-to-end work on messy geospatial data, so I led with ..."
+  "notes": "Anduril is buying end-to-end work on messy geospatial data, so I led with ...",
+  "requirements": [
+    {"label": "Python", "importance": "required", "evidence_ids": ["skill-python", "vins-03"]},
+    {"label": "security clearance", "importance": "preferred", "evidence_ids": []}
+  ]
 }"""
 
 # One flat row per bullet. Deeper nesting (sections -> entries -> bullets) proved
@@ -145,6 +158,25 @@ SCHEMA = {
         "activity_ids": {"type": "array", "items": {"type": "string"}},
         "interest_ids": {"type": "array", "items": {"type": "string"}},
         "notes": {"type": "string"},
+        "requirements": {
+            "type": "array",
+            "description": "What the posting asks for, most important first, with the "
+            "corpus ids that demonstrate each. Terminal-only; never printed on the page.",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "label": {
+                        "type": "string",
+                        "description": "1-4 words, canonical across postings, e.g. 'SQL', "
+                        "'Tableau', 'A/B testing', 'security clearance'.",
+                    },
+                    "importance": {"type": "string", "enum": ["required", "preferred"]},
+                    "evidence_ids": {"type": "array", "items": {"type": "string"}},
+                },
+                "required": ["label", "importance", "evidence_ids"],
+                "additionalProperties": False,
+            },
+        },
     },
     "required": [
         "target",
@@ -156,12 +188,15 @@ SCHEMA = {
         "activity_ids",
         "interest_ids",
         "notes",
+        "requirements",
     ],
     "additionalProperties": False,
 }
 
 
-def validate_plan(plan: dict, entries: list[dict] | None = None) -> list[str]:
+def validate_plan(
+    plan: dict, entries: list[dict] | None = None, profile: dict | None = None
+) -> list[str]:
     """Structural checks the JSON schema can't express (it forbids minItems)."""
     problems: list[str] = []
 
@@ -177,6 +212,27 @@ def validate_plan(plan: dict, entries: list[dict] | None = None) -> list[str]:
         if key in seen:
             problems.append(f"bullet {key!r} selected more than once")
         seen.add(key)
+
+    if entries and profile:
+        # An unknown id would otherwise surface in corpus.resolve(), after the call is
+        # paid for and with no retry. Catching it here sends it back to the model.
+        idx = corpus.index(profile, entries)
+        for sel in selections:
+            owner = idx["bullets"].get(sel.get("bullet_id"), (None,))[0]
+            if owner is None:
+                problems.append(f"bullet_id {sel.get('bullet_id')!r} is not in the corpus")
+            elif owner["id"] != sel.get("entry_id"):
+                problems.append(
+                    f"bullet {sel['bullet_id']!r} belongs to entry {owner['id']!r}, "
+                    f"not {sel.get('entry_id')!r}"
+                )
+        pool_ids = [plan.get("credential_id")] + [
+            i for key in ("coursework_ids", "skill_ids", "activity_ids", "interest_ids")
+            for i in plan.get(key) or []
+        ]
+        for item_id in pool_ids:
+            if item_id not in idx["pools"]:
+                problems.append(f"{item_id!r} is not a credential/course/skill/activity/interest id")
 
     if entries and selections:
         # Two phrasings of the same accomplishment must not both appear.
@@ -297,7 +353,7 @@ def build_plan(
         if debug_path:
             debug_path.write_text(text)
         plan = json.loads(text)
-        problems = validate_plan(plan, entries)
+        problems = validate_plan(plan, entries, profile)
 
         if not problems:
             plan["_usage"] = {

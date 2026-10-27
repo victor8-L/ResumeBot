@@ -39,11 +39,13 @@ Rendering uses headless Google Chrome. Set `CHROME_PATH` if yours lives somewher
 
 ### Try it without a key
 
-A fresh clone uses the example corpus automatically. `render` and `show` make no API calls:
+A fresh clone uses the example corpus automatically. `render`, `show`, `audit`, `lint`,
+and `gaps` make no API calls:
 
 ```bash
 python -m resumebot.cli render corpus.example/sample.plan.json --out sample.pdf --open
 python -m resumebot.cli audit     # evidence per domain, freshness breakdown
+python -m resumebot.cli lint      # corpus text that would print wrong
 ```
 
 ### Use your own material
@@ -54,6 +56,8 @@ cp -r corpus.example corpus       # corpus/ is gitignored, so your data stays lo
 
 Edit `corpus/*.json` by hand, or drop your past resumes (PDF/DOCX) into `data/` and run
 `python -m resumebot.cli ingest` to have Claude extract every bullet into the corpus.
+`ingest` is for the first build; after that, add each new resume with
+[`merge`](#adding-a-new-resume), which keeps the tags and alt-groups you've tuned.
 
 ## Use
 
@@ -87,7 +91,70 @@ python -m resumebot.cli render out/2026-07-28-acme-data-analyst-intern.plan.json
 ```
 
 Other commands: `show` prints the corpus exactly as the model sees it; `audit` reports
-domain coverage and freshness.
+domain coverage and freshness; `lint` and `merge` are covered under
+[Keeping the corpus current](#keeping-the-corpus-current).
+
+### What the posting asks for
+
+Alongside the selection, the model lists the posting's requirements as short canonical
+labels (`SQL`, `security clearance`) with the corpus ids that demonstrate each. Coverage is
+then computed in code against what survived the fitter, not taken on the model's word:
+
+```
+  What the posting asks for:
+    on page   Python, data pipelines, geospatial tooling, ML model evaluation, SQL
+    off page  Excel [skill-excel]
+    MISSING   security clearance
+```
+
+`off page` names the ids to add if you hand-edit the plan. Across applications,
+`python -m resumebot.cli gaps` tallies every saved plan, so a skill four postings in a row
+asked for and the corpus can't show becomes a ranked to-do instead of a hunch. Like
+`notes`, none of this reaches the PDF.
+
+## Keeping the corpus current
+
+### Adding a new resume
+
+```bash
+python -m resumebot.cli merge "data/Resume(Finance).docx"
+```
+
+`ingest` rebuilds the corpus from scratch; `merge` folds in one resume and keeps
+everything else. Claude classifies each bullet against the corpus: **same**, **reword**
+(retires the old wording), **alternate** (joins its alt-group), or **new**. It also
+reports entry changes (an end date replacing "Present", a renamed employer), the GPA line,
+footer pools, and every fact that contradicts the corpus. Nothing is written yet: the
+proposal is saved to `out/merge-<slug>.json` and printed as a change list. Fix any wrong
+call in the JSON, then:
+
+```bash
+python -m resumebot.cli merge --apply out/merge-finance-v1.json
+```
+
+Applying makes no API call and backs up the corpus first. Code, not the model, has the
+last word. A bullet labelled "same" whose text changed is applied as a reword. A "new"
+bullet already in the corpus verbatim is credited instead of duplicated. A resume older
+than the wording it would replace can't overwrite it. A footer item that differs only by a
+qualifier ("Excel" vs "Excel (Financial Modeling)") is never added as a second item. The
+resume is registered in `versions.json`, dated from the file or `--date`.
+
+### Lint
+
+`python -m resumebot.cli lint` checks the corpus for text that would print wrong:
+
+- present tense under a role that has ended (`Designing…` under `– May 2026`)
+- wording that dates itself (`upcoming`, `incoming`, `currently`)
+- two bullets in one entry that disagree on a quantity (`40 clients` vs
+  `35+ client accounts`; `112%` vs `2.3x` improvement)
+- near-identical bullets without a shared alt-group, which could print together
+- a title that differs between an entry and the activities line
+- `– Present` entries that no recent resume has used
+- broken references: unregistered resume versions, duplicate ids, one-member alt-groups
+
+`!` findings print wrong as written; `?` findings deserve a look. `tailor` and `render`
+repeat any finding about content on the page they just built, `audit` ends with a count,
+and `lint` exits non-zero on errors.
 
 ## How it works
 
@@ -176,8 +243,11 @@ corpus/                  your real corpus (gitignored; falls back to corpus.exam
 templates/               HTML/CSS resume template
 resumebot/select.py      job description -> structured plan (the one API call)
 resumebot/render.py      plan -> HTML -> PDF, one-page fit loop
-resumebot/corpus.py      loading, id validation, plan -> view model, audit
-resumebot/ingest.py      data/*.pdf|docx -> corpus
+resumebot/corpus.py      loading, id validation, plan -> view model, audit, saving
+resumebot/ingest.py      data/*.pdf|docx -> corpus (first build)
+resumebot/merge.py       one new resume -> reviewable proposal -> corpus
+resumebot/lint.py        corpus text that would print wrong (no API call)
+resumebot/gaps.py        requirement coverage per run and across saved plans
 resumebot/cli.py         command line
 data/                    your source resumes (gitignored)
 out/                     generated PDFs + plans (gitignored)
