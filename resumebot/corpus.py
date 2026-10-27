@@ -47,6 +47,14 @@ def load_versions(corpus_dir: Path | None = None) -> dict:
     return json.loads(path.read_text()).get("versions", {})
 
 
+def newest_date(bullet: dict, versions: dict) -> str:
+    """YYYY-MM-DD of the newest resume carrying this exact wording, or "" if none."""
+    dates = [
+        versions[v]["date"] for v in bullet.get("resume_versions", []) if v in versions
+    ]
+    return max(dates, default="")
+
+
 def freshness(bullet: dict, versions: dict) -> tuple[str, str]:
     """(tier, YYYY-MM) for a bullet, from the newest resume that still carries it.
 
@@ -54,14 +62,54 @@ def freshness(bullet: dict, versions: dict) -> tuple[str, str]:
     on June's resume beats the wording on last September's. It is deliberately *only* a
     tie-breaker — plenty of archive bullets say something no current bullet says.
     """
-    dates = [
-        versions[v]["date"] for v in bullet.get("resume_versions", []) if v in versions
-    ]
-    if not dates:
+    newest = newest_date(bullet, versions)
+    if not newest:
         return "archive", "unknown"
-    newest = max(dates)
     tier = next(name for name, floor in FRESHNESS_TIERS if newest >= floor)
     return tier, newest[:7]
+
+
+# Pools whose items sit one per line in profile.json, so a long pool stays scannable.
+_ONE_LINE_ITEMS = {"coursework_pool", "skills_pool", "activities_pool", "interests_pool"}
+
+
+def dumps(value, _level: int = 0, _key: str | None = None) -> str:
+    """JSON in the corpus's hand-edited house style, so a rewrite only diffs what changed.
+
+    Two-space indent; lists of scalars on one line except at the top level of a file
+    (the contact block); pool items one object per line.
+    """
+    pad = "  " * _level
+    if isinstance(value, dict):
+        if not value:
+            return "{}"
+        rows = [
+            f"{pad}  {json.dumps(k, ensure_ascii=False)}: {dumps(v, _level + 1, k)}"
+            for k, v in value.items()
+        ]
+        return "{\n" + ",\n".join(rows) + f"\n{pad}}}"
+    if isinstance(value, list):
+        scalars = all(not isinstance(v, (dict, list)) for v in value)
+        if scalars and (_level > 1 or not value):
+            return "[" + ", ".join(json.dumps(v, ensure_ascii=False) for v in value) + "]"
+        if _key in _ONE_LINE_ITEMS:
+            rows = [f"{pad}  {{ {json.dumps(v, ensure_ascii=False)[1:-1]} }}" for v in value]
+        else:
+            rows = [f"{pad}  {dumps(v, _level + 1)}" for v in value]
+        return "[\n" + ",\n".join(rows) + f"\n{pad}]"
+    return json.dumps(value, ensure_ascii=False)
+
+
+def save(
+    profile: dict, entries: list[dict], versions: dict, corpus_dir: Path | None = None
+) -> None:
+    corpus_dir = corpus_dir or CORPUS_DIR
+    (corpus_dir / "profile.json").write_text(dumps(profile) + "\n")
+    (corpus_dir / "entries.json").write_text(dumps(entries) + "\n")
+    path = corpus_dir / "versions.json"
+    registry = json.loads(path.read_text()) if path.exists() else {}
+    registry["versions"] = versions
+    path.write_text(dumps(registry) + "\n")
 
 
 def index(profile: dict, entries: list[dict]) -> dict:
